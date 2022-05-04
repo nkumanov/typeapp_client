@@ -9,6 +9,7 @@ import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
 import Detail from './components/Detail';
+import CategoryBlog from './components/CategoryBlog';
 
 function App() {
   return (
@@ -29,8 +30,11 @@ function App() {
         <Route path='/register'>
           <Register></Register>
         </Route>
-        <Route path='/blog/:blogId'>
-          <Detail></Detail>
+        <Route path='/blogs/category/:category'>
+          <CategoryBlog></CategoryBlog>
+        </Route>
+        <Route>
+
         </Route>
       </Switch>
 
