@@ -3,6 +3,7 @@ import Blog from './Blog'
 import { useEffect, useState } from 'react'
 
 import Categories from './Categories'
+
 export default function MainContent() {
     const [blogs, setBlogs] = useState<[]>([]);
     useEffect(() => {
