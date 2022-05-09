@@ -2,7 +2,7 @@ import React from "react";
 import Cookies from "universal-cookie";
 import { Route, Link } from "react-router-dom";
 // import { useNavigate } from 'react-router-dom';
-
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 interface Iprops {
   author: string;
   authorImage: string;
@@ -29,7 +29,9 @@ const Blog: React.FunctionComponent<Iprops> = ({
   const cookie = new Cookies();
   // const navigate = useNavigate();
   const addBookmark = () => {
+    
     if (cookie.get("userData")) {
+      console.log(id)
       fetch(`http://localhost:5000/user/bookmark/${id}`, {
         method: "PATCH",
         headers: {
@@ -76,7 +78,7 @@ const Blog: React.FunctionComponent<Iprops> = ({
             title="add to bookmark"
             onClick={addBookmark}
           >
-            <i className="far fa-bookmark"></i>
+            <BookmarkIcon></BookmarkIcon>
           </button>
         </div>
       </div>

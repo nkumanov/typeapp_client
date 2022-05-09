@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "@mui/material/Button";
+
 const About = () => {
   return (
     <div className="row row-form-content">
@@ -16,12 +16,7 @@ const About = () => {
               aut sunt animi, ex hic nobis libero dolores et.
             </p>
           </section>
-          <Button variant="contained" size="small" color="secondary" style={{
-            fontSize: 15,
-            
-          }}>
-            Hello Button
-          </Button>
+          
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import { useDispatch } from "react-redux";
+import { getBookmarks } from "../features/userLogin";
 import DialogContent from "@mui/material/DialogContent";
 // import CloseIcon from '@mui/icons-material/Close';
 import Typography from "@mui/material/Typography";
@@ -10,6 +11,7 @@ import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
 import { login } from "../features/userLogin";
+import { AppDispatch } from "./store";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -41,14 +43,16 @@ export default function CustomizedDialogs() {
   const [error, setError] = useState("");
   const navigate = useHistory();
   const cookies = new Cookies();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
 
   useEffect(() => {
     if (cookies.get("userData") != undefined) {
       navigate.push("/");
     }
   }, []);
-  
+
+
   const handleForm = async (event: React.FormEvent) => {
     event.preventDefault();
     if (username.length < 4 || password.length < 4) {
@@ -67,14 +71,15 @@ export default function CustomizedDialogs() {
       headers: { "Content-Type": "application/json" },
     });
     let data = await response.json();
-
+    console.log(data)
     if (response.status >= 200 && response.status < 300) {
       token = data.token;
 
-      cookies.set("userData", token.token);
-      dispatch(login(true));
+      cookies.set("userData", token);
+      dispatch(login(data.token));
       navigate.push("/");
       setOpen(false);
+      dispatch(getBookmarks())
     } else {
       setError(data["error-message"]);
     }
@@ -107,7 +112,7 @@ export default function CustomizedDialogs() {
                       <label htmlFor="username">
                         <i className="fas fa-user"></i>
                         <input
-                        
+
                           type="text"
                           onChange={(e) => setUsername(e.target.value)}
                           id="username"

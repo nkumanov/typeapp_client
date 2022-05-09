@@ -6,10 +6,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainContent from "../src/components/MainContent";
 import Header from "./components/Header";
 import About from "./components/About";
-import Login from "./components/Login";
-import Register from "./components/Register";
+
 import Detail from "./components/Detail";
 import CategoryBlog from "./components/CategoryBlog";
+import Bookmarks from "./components/Bookmarks";
 
 
 function App() {
@@ -24,17 +24,14 @@ function App() {
         <Route path="/about">
           <About></About>
         </Route>
-        <Route path="/login">
-          <Login></Login>
-        </Route>
-        <Route path="/register">
-          <Register></Register>
-        </Route>
         <Route path="/blogs/category/:category">
           <CategoryBlog></CategoryBlog>
         </Route>
-        <Route path="/blogs/:blogId">
+        <Route path="/blog/:blogId">
           <Detail></Detail>
+        </Route>
+        <Route path='/bookmarks'>
+          <Bookmarks></Bookmarks>
         </Route>
       </Switch>
     </BrowserRouter>

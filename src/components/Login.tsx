@@ -35,9 +35,9 @@ export default function Login() {
             headers: { 'Content-Type': 'application/json' }
         })
         let data = await response.json();
-        
+        console.log(data)
         if (response.status >= 200 && response.status < 300) {
-
+            
             token = data.token;
             
             cookies.set('userData', token.token);
