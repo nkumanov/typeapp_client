@@ -50,7 +50,9 @@ export const userSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(getBookmarks.fulfilled, (state, action) => {
-      console.log(action.payload)
+      if(action.payload){
+        state.posts = action.payload
+      }
       
     })
   }
