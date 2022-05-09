@@ -21,6 +21,7 @@ export default function Header() {
   
   const getLoggedOut = (): void => {
     dispatch(logout(''));
+    
     navigate.push("/");
   };
 

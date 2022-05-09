@@ -11,7 +11,10 @@ const checkLog = (): string => {
     return '';
   }
 }
-
+const logUserOut = (): void => {
+  const cookie = new Cookies();
+  cookie.remove('userData')
+}
 
 export const getBookmarks = createAsyncThunk('blogs/getBlogs', async () => {
   try {
@@ -27,7 +30,7 @@ export const getBookmarks = createAsyncThunk('blogs/getBlogs', async () => {
 })
 interface Initial {
   value: string,
-  posts: [],
+  posts: any[],
   status: string
 }
 const initialState: Initial = {
@@ -42,12 +45,12 @@ export const userSlice = createSlice({
     },
     logout: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
+      logUserOut()
     },
   },
   extraReducers(builder) {
-    builder.addCase(getBookmarks.fulfilled, (state, action: PayloadAction<{}[] | undefined>) => {
+    builder.addCase(getBookmarks.fulfilled, (state, action) => {
       console.log(action.payload)
-
       
     })
   }

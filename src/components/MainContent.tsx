@@ -1,11 +1,13 @@
 import React from 'react'
 import Blog from './Blog'
 import { useEffect, useState } from 'react'
-
+import { useSelector } from 'react-redux'
 import Categories from './Categories'
-
+import { RootState } from "./store";
 export default function MainContent() {
     const [blogs, setBlogs] = useState<[]>([]);
+    const asd = useSelector((state: RootState) => state.userlogin);
+    console.log(asd)
     useEffect(() => {
         fetch('http://localhost:5000/blogs').then(res => res.json()).then(data => setBlogs(data))
 
