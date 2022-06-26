@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit"
-import userLoginReducer from '../features/userLogin'
+import userLoginReducer from './userLogin'
 const store = configureStore({
     reducer: {
-      userlogin: userLoginReducer
+      user: userLoginReducer
     },
   })
   export type RootState = ReturnType<typeof store.getState>

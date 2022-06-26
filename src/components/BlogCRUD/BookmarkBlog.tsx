@@ -1,8 +1,7 @@
-import React from 'react'
-import Cookies from 'universal-cookie';
-import { Link } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 interface Iprops {
     author: string;
@@ -19,7 +18,7 @@ interface Iprops {
 const Blog: React.FC<Iprops> = (props) => {
     const cookie = new Cookies();
 
-    const navigate = useHistory();
+    const navigate = useNavigate();
 
     const removeBookmark = (): void | undefined => {
         if (cookie.get('userData')) {
@@ -29,8 +28,9 @@ const Blog: React.FC<Iprops> = (props) => {
 
             })
             props.setChanger();
+            console.log('here')
         } else {
-            navigate.push('/login');
+            navigate('/login');
             return undefined;
         }
     }

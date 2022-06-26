@@ -1,21 +1,9 @@
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { Route, Link } from "react-router-dom";
-// import { useNavigate } from 'react-router-dom';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-interface Iprops {
-  author: string;
-  authorImage: string;
-  blogImage: string;
-  category: string;
-  createdAt: string;
-  id: string;
-  readTime: number;
-  subTitle: string;
-  title: string;
-}
-
-const Blog: React.FunctionComponent<Iprops> = ({
+import { BlogDTO } from "../../models/BlogDTO";
+export const Blog: React.FunctionComponent<BlogDTO> = ({
   author,
   authorImage,
   blogImage,
@@ -25,13 +13,12 @@ const Blog: React.FunctionComponent<Iprops> = ({
   readTime,
   subTitle,
   title,
+  children,
 }) => {
   const cookie = new Cookies();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const addBookmark = () => {
-    
     if (cookie.get("userData")) {
-      console.log(id)
       fetch(`http://localhost:5000/user/bookmark/${id}`, {
         method: "PATCH",
         headers: {
@@ -40,12 +27,13 @@ const Blog: React.FunctionComponent<Iprops> = ({
         },
       });
     } else {
-      // navigate('/login');
+      navigate("/login");
       return;
     }
   };
   return (
     <section className="content">
+      {children}
       <div className="blog-content">
         <div className="author">
           <img
@@ -95,5 +83,3 @@ const Blog: React.FunctionComponent<Iprops> = ({
     </section>
   );
 };
-
-export default Blog;

@@ -1,64 +1,66 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { WritableDraft } from "immer/dist/internal";
-import React from "react";
-import Cookies from 'universal-cookie'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "universal-cookie";
+import { getBookmarks } from "../components/_helper/getBookmarks";
 
-const checkLog = (): string => {
+export const checkLog = (): string => {
   const cookie = new Cookies();
-  if (cookie.get('userData')) {
-    return cookie.get('userData')
+  if (cookie.get("userData")) {
+    return cookie.get("userData");
   } else {
-    return '';
+    return "";
   }
-}
+};
+const setUserCookie = (token: string): void => {
+  const cookie = new Cookies();
+  cookie.set("userData", token);
+};
 const logUserOut = (): void => {
   const cookie = new Cookies();
-  cookie.remove('userData')
-}
+  cookie.remove("userData");
+};
 
-export const getBookmarks = createAsyncThunk('blogs/getBlogs', async () => {
-  try {
-    let response = await fetch('http://localhost:5000/user/bookmarked', {
-      method: 'GET',
-      headers: { "Content-Type": "application/json", 'X-Authorization': checkLog() },
-    });
-    let data = await response.json();
-    return [...data];
-  } catch (error) {
-    console.log(error);
-  }
-})
+
 interface Initial {
-  value: string,
-  posts: any[],
-  status: string
+  userLogin: string;
+  bookmarked: any[];
+  status: string;
 }
 const initialState: Initial = {
-  value: checkLog(), posts: [], status: 'idle'
-}
+  userLogin: checkLog(),
+  bookmarked: [],
+  status: "idle",
+};
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      state.value = action.payload;
+    login: (state: Initial, action: PayloadAction<string>) => {
+      state.userLogin = action.payload;
+      console.log(action.payload)
+      setUserCookie(action.payload);
     },
-    logout: (state, action: PayloadAction<string>) => {
-      state.value = action.payload;
-      logUserOut()
+    logout: (state: Initial, action: PayloadAction<string>) => {
+      state.userLogin = action.payload;
+      logUserOut();
+    },
+    register: (state: Initial, action: PayloadAction<string>) => {
+      state.userLogin = action.payload;
+      setUserCookie(action.payload);
     },
   },
   extraReducers(builder) {
     builder.addCase(getBookmarks.fulfilled, (state, action) => {
-      if(action.payload){
-        state.posts = action.payload
+      if (action.payload) {
+        state.bookmarked = action.payload;
       }
-      
-    })
-  }
+    });
+    builder.addCase(getBookmarks.rejected, (state, action) => {
+      state.status = "rejected";
+    });
+  },
 });
 
-export const { login, logout } = userSlice.actions;
-
+export const { login, logout, register } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const About = () => {
+export const About = () => {
   return (
     <div className="row row-form-content">
       <div className="wrapper">
@@ -16,11 +16,10 @@ const About = () => {
               aut sunt animi, ex hic nobis libero dolores et.
             </p>
           </section>
-          
         </div>
       </div>
     </div>
   );
 };
 
-export default About;
+

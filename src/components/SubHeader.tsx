@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
 import writingImage from '../images/jumbo-1.jpg';
@@ -18,7 +18,7 @@ const SubHeader: React.FunctionComponent<{ logged: Boolean }> = (props) => {
                     </div>
                     <div className="content-right">
                         <div className="jumbo-img">
-                            <img src={writingImage} alt="Writing image" srcSet="" />
+                            <img src={writingImage} alt="Writing image"/>
                         </div>
                     </div>
                 </div>

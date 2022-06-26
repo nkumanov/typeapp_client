@@ -1,40 +1,28 @@
-import React from "react";
 import { useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavLink from "./NavLink";
-import { Link } from "react-router-dom";
 
-import PopupLogin from "./popupLogin";
-import RegisterPopUp from "./RegisterPopUp";
-import CreatePopup from './CreatePopup'
-import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store";
-import SubHeader from "./SubHeader";
 import { logout } from "../features/userLogin";
+import { RootState } from "../features/store";
+import SubHeader from "./SubHeader";
 
 export default function Header() {
   let location = useLocation();
   const dispatch = useDispatch();
 
-  const isLogged = useSelector((state: RootState) => state.userlogin.value);
-  const navigate = useHistory();
-  
+  const isLogged = useSelector((state: RootState) => state.user.userLogin);
+  console.log(isLogged)
+  const navigate = useNavigate();
+
   const getLoggedOut = (): void => {
-    dispatch(logout(''));
-    
-    navigate.push("/");
+    dispatch(logout(""));
+
+    navigate("/");
   };
 
   const navItems = useRef<HTMLInputElement>(null);
-  // const myFunction = () => {
 
-  //     if(navItems.current.style.display == ''){
-  //         navItems.current.style.display = 'flex';
-  //         return null;
-  //     }
-  //     navItems.current.style.display = navItems.current.style.display == 'none' ? 'flex' : 'none'
-  // }
-  
   return (
     <>
       <div className="row row-header">
@@ -44,13 +32,16 @@ export default function Header() {
           </div>
           {isLogged ? (
             <div ref={navItems} className="header-right desktop-nav">
-              <CreatePopup></CreatePopup>
+              <NavLink
+                link="/blog/create"
+                title="Create blog"
+                path="blog/create"
+              />
               <NavLink
                 link="/bookmarks"
                 title="My Bookmarks"
                 path="bookmarks"
               />
-
               <div className={"nav-links"}>
                 <button onClick={getLoggedOut}>Logout</button>
               </div>
@@ -58,16 +49,13 @@ export default function Header() {
           ) : (
             <div ref={navItems} className="header-right desktop-nav">
               <NavLink link="/about" title="Our Story" path="about" />
-              <PopupLogin></PopupLogin>
-              <RegisterPopUp></RegisterPopUp>
-              
+              <NavLink link="/login" title="Login" path="login" />
+              <NavLink link="/register" title="Register" path="register" />
             </div>
           )}
-          
         </div>
-        
       </div>
-      {location.pathname == "/" ? (
+      {location.pathname === "/" ? (
         <SubHeader logged={isLogged ? true : false} />
       ) : (
         ""

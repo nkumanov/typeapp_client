@@ -1,12 +1,18 @@
+import React from "react";
+import { Blog } from "./Blog";
 import { useEffect, useState } from "react";
-import { Blog } from "./BlogCRUD/Blog";
-import Categories from "./Categories";
-import { getBlogs } from "./_helper/getBlog";
-export const MainContent: React.FC = () => {
-  const [blogs, setBlogs] = useState<[]>([]);
+import { useParams } from "react-router-dom";
+import Categories from "../Categories";
+
+const CategoryBlog: React.FC = () => {
+  const [blogs, setBlogs] = useState([]);
+  const { category } = useParams();
   useEffect(() => {
-    getBlogs().then((res) => setBlogs(res?.data));
-  }, []);
+    fetch(`http://localhost:5000/blogs/category/${category}`)
+      .then((res) => res.json())
+      .then((data) => setBlogs(data));
+  }, [category]);
+
   return (
     <div className="row row-main-content">
       <div className="wrapper">
@@ -24,7 +30,7 @@ export const MainContent: React.FC = () => {
                   subTitle={element.subTitle}
                   category={element.category}
                   createdAt={element.createdAt}
-                  author={element.author || "Unknown User"}
+                  author={element.author || "pesho"}
                 />
               ))
             ) : (
@@ -40,3 +46,5 @@ export const MainContent: React.FC = () => {
     </div>
   );
 };
+
+export default CategoryBlog;
