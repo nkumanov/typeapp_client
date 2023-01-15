@@ -45,6 +45,7 @@ export const userSlice = createSlice({
       logUserOut();
     },
     register: (state: Initial, action: PayloadAction<string>) => {
+      console.log('here')
       state.userLogin = action.payload;
       setUserCookie(action.payload);
     },

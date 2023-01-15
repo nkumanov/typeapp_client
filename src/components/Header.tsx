@@ -12,7 +12,6 @@ export default function Header() {
   const dispatch = useDispatch();
 
   const isLogged = useSelector((state: RootState) => state.user.userLogin);
-  console.log(isLogged)
   const navigate = useNavigate();
 
   const getLoggedOut = (): void => {
@@ -32,6 +31,7 @@ export default function Header() {
           </div>
           {isLogged ? (
             <div ref={navItems} className="header-right desktop-nav">
+              <NavLink link="/about" title="Our Story" path="about" />
               <NavLink
                 link="/blog/create"
                 title="Create blog"

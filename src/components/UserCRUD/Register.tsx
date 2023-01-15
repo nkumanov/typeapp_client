@@ -38,7 +38,7 @@ const Register = () => {
     }
     setLoading(true);
     let response = await userRegister(user).then((res) => res);
-
+    console.log(response)
     if (response.status >= 200 && response.status < 300) {
       token = response.data.token;
 

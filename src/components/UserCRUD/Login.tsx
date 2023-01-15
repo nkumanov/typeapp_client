@@ -33,9 +33,9 @@ export default function Login() {
     let response = await userLogin(user).then((res) => res);
 
     if (response.status >= 200 && response.status < 300) {
-      setLoading(false);
       token = response.data.token;
       dispatch(login(token));
+      setLoading(false);
       navigate("/");
     } else {
       setLoading(false);
